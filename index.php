@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./public/css/style.css">
 
 </head>
 
@@ -25,9 +25,9 @@
     //     require_once $class_name . '.php';
     // });
 
-    include 'Connection.php';
-    $cn = new Connection();
-    $db = $cn->getDb();
+    use Model\Connect;
+
+    $pdo = Connect::seConnecter();
 
     try {
         //get list des film requet utilisant PDO

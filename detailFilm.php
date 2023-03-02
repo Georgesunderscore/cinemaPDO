@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./public/css/style.css">
 
 </head>
 
@@ -24,8 +24,9 @@
         require_once $class_name . '.php';
     });
     //get connection 
-    $cn = new Connection();
-    $db = $cn->getDb();
+    use Model\Connect;
+
+    $pdo = Connect::seConnecter();
 
     $id = isset($_GET["id"]) ? $_GET["id"] : "";
 
