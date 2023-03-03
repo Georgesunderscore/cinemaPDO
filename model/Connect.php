@@ -1,9 +1,6 @@
-
-
-
 <?php
-
 namespace Model;
+
 
 abstract class Connect
 {
