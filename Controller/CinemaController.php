@@ -10,26 +10,42 @@
 
     class CinemaController{
     
-    public function listFilms(){
-    
-        $pdo = Connect::seConnecter();
-        //$requet = $pdo->query("select  titre  , year(date) from film");
-        
-        try {
-            //get list des film requet utilisant PDO
-            $cinemaStatement = $pdo->query("SELECT id_film, titre , YEAR(DATE) as year ,  concat(p.nom,' ',p.prenom) AS realisateur , TIME_FORMAT(SEC_TO_TIME(f.duree*60),'%h:%i') as dtime FROM  film f
-                                                                                    INNER JOIN realisateur r ON f.id_realisateur = r.id_realisateur 
-                                                                                    INNER JOIN personne p ON p.id_personne = r.id_personne");
-            $cinemaStatement->execute();
-            $cinemaList = $cinemaStatement->fetchAll();
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+
+        public function detailFilm($id){
+            $pdo = Connect::seConnecter();
+            try {
+                //get list des film requet utilisant PDO
+                $requet = $pdo->prepare("SELECT * FROM film WHERE id_film = :id");
+                $requet->execute(["id"=> $id]);
+                $film = $requet->fetch();
+            } catch (Exception $e) {
+                die('Erreur : ' . $e->getMessage());
+            }
+            require "view/film/detailFilm.php";
         }
-        require "view/film/listFilms.php";
-    }
-
-
         
         
+        
+        public function listFilms(){
+            $pdo = Connect::seConnecter();
+            //$requet = $pdo->query("select  titre  , year(date) from film");
+            try {
+                //get list des film requet utilisant PDO
+                $cinemaStatement = $pdo->query("SELECT id_film, titre , YEAR(DATE) as year ,  concat(p.nom,' ',p.prenom) AS realisateur , TIME_FORMAT(SEC_TO_TIME(f.duree*60),'%h:%i') as dtime FROM  film f
+                                                                                        INNER JOIN realisateur r ON f.id_realisateur = r.id_realisateur 
+                                                                                        INNER JOIN personne p ON p.id_personne = r.id_personne");
+                // $cinemaStatement->execute();
+                $cinemaList = $cinemaStatement->fetchAll();
+            } catch (Exception $e) {
+                die('Erreur : ' . $e->getMessage());
+            }
+            require "view/film/listFilms.php";
+        }
+    
 
-    }
+    
+}
+
+?>
+    
+ 
