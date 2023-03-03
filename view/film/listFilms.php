@@ -1,16 +1,4 @@
-<!-- <!DOCTYPE html> -->
-<!doctype html>
-<html lang="en">
 
-<head>
-    <title>Intro PDO Cinema listFilmphp </title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- for mobile first -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-
-<body>
 
 
 <?php ob_start(); ?>
