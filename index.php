@@ -16,6 +16,11 @@
                     case "listFilms" : $ctrlCinema->listFilms();
                     unset($_GET['action']);
                     break;
+
+                    case "detailFilm" : $ctrlCinema->detailFilm($id);
+                    unset($_GET['action']);
+                    break;
+
                     //case "ListActeurs" : $ctrlCinema->listActeur(); break;
                 }
             }
