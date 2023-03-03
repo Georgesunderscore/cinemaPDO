@@ -24,7 +24,8 @@
                         foreach ($cinemaList as $index => $film) {
                     ?>
                         <tr>
-                            <td><a href="detailFilm.php?id=<?= $film["id_film"] ?>"><?= $film["titre"] ?>
+                            <td><a href="index.php?action=detailFilm&id=<?= $film["id_film"] ?>"><?= $film["titre"] ?>
+
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
 
