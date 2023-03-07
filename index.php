@@ -26,7 +26,23 @@ if (isset($_GET["action"])) {
             unset($_GET['action']);
             break;
 
-            //case "ListActeurs" : $ctrlCinema->listActeur(); break;
+        case "listActeurs":
+            $ctrlCinema->listActeurs();
+            break;
+
+        case "detailActeur":
+            $ctrlCinema->detailActeur($id);
+            unset($_GET['action']);
+            break;
+
+        case "listRealisateurs":
+            $ctrlCinema->listRealisateur();
+            break;
+
+        case "detailRealisateur":
+            $ctrlCinema->detailRealisateur($id);
+            unset($_GET['action']);
+            break;
     }
 }
 //index page par default get list of films 

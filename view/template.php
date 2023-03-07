@@ -14,23 +14,36 @@
 
 
 <body>
+
+
+
+
     <header>
         <div>
             <h1>Intro PDO CINEMA</h1>
-            <a href="index.php?action=listFilms">
-                <h2> </h2>
-            </a>
+            <a href="index.php?action=listFilms"></a>
         </div>
 
-        <ul>
-            <li><a class="nav_link" href="index.php?action=listFilms">List des Films</a></li>
-        </ul>
+
+        <div class="topnav">
+
+
+            <a class="" href="index.php?action=listFilms">List des Films</a>
+            <a href="index.php?action=listActeurs">List des Acteurs</a>
+            <a href="index.php?action=listRealisateurs">List des Realisateurs</a>
+
+            <a href="#contact">Contact</a>
+            <a href="#about">About</a>
+        </div>
 
     </header>
 
-    <h2><?= $titre_secondaire ?></h2>
+
     <!-- pour faire visioner le continu de la page listfilm passer en parameter avec required en template  -->
-    <div id="maincontainer"><?= $contenu ?></div>
+    <div id="maincontainer">
+        <h2><?= $titre_secondaire ?></h2>
+        <?= $contenu ?>
+    </div>
 </body>
 
 </html>

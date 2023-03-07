@@ -20,11 +20,36 @@ if (!isset($film) || empty($film)) {
                     <p>Année de sortie : <?= $film['year'] ?></p>
                     <p>Réalisation : <?= $film['realisateur'] ?></p>
                     <p>Durée : <?= $film['dtime'] ?></p>
-                    <p>Note : <?= $film['note'] ?> </p>
+                    <p>Note :
+                        <?php
+                        $note = $film['note'];
+                        for ($i = 1; $i <= 5; $i++) {
+                            if ($i <= $note) {
+                        ?>
+                                <i class="fa-solid fa-star"></i>
+                            <?php
+                            } else {
+                            ?>
+                                <i class="fa-regular fa-star"></i>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </p>
+
+
+
                 </div>
-                <div class="card-text">
-                    <h1>Article 1</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem blanditiis quibusdam possimus! Porro, nulla voluptatem?</p>
+                <div class="card-text scroll">
+                    <h1>Casting</h1>
+                    <?php
+                    // or utiliser $cinemaStatement->fetchAll() as $film
+                    foreach ($castingsList as $cast) {
+                    ?>
+                        <p><?= $cast['acteur'] ?> (<?= $cast['nom'] ?>)</p>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -33,7 +58,7 @@ if (!isset($film) || empty($film)) {
 }
 
 $titre = "film Detail";
-$titre_secondaire = "";
+$titre_secondaire = "Film Details";
 //end par , ob_get_clean  pour mettre le contenue de la page dans contenu et le paser en parameter pour template 
 $contenu = ob_get_clean();
 //require qui va passer le contenue  comme parametre a template        
