@@ -32,7 +32,7 @@
 
 
 .card-header{
-    height: 200px;
+    height: 260px;
     /* pour que les childs sont bien positioner par rapport a cardheader comme parent dois etre relative */
     position: relative;
     overflow: hidden;
