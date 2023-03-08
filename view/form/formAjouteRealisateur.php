@@ -10,12 +10,12 @@
         <input type="text" class="form-control" id="prenomInput" placeholder="Prenom" name='prenom' required>
     </div>
     <div class="form-group">
-        <label for="dateInput">date de naissance</label>
+        <label for="dateInput">Date De Naissance</label>
         <input type="date" class="form-control" id="dateInput" name="date_naissance" required>
     </div>
     <div class="form-group">
         <label for="select">Choisissez le sexe</label>
-        <select id="select" name="sexe" class=""  required>
+        <select id="select" name="sexe" class="form-select"  required>
             <option value="">select...</option>
             <option value="M">Homme</option>
             <option value="F">Femme</option>

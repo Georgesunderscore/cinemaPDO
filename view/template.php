@@ -37,6 +37,7 @@
 
     <li><a href="index.php?action=formAjouteActeur">+ Acteur</a></li>
     <li><a href="index.php?action=formAjouteRealisateur">+ Realisateur</a></li>
+    <li><a href="index.php?action=formAjouteFilm">+ Film</a></li>
 
 
 

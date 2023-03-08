@@ -14,7 +14,7 @@ class CinemaController
         $pdo = Connect::seConnecter();
         try {
             //get list des film requet utilisant PDO
-            $requet = $pdo->prepare("SELECT titre , YEAR(DATE) as year ,  concat(p.nom,' ',p.prenom) AS realisateur , TIME_FORMAT(SEC_TO_TIME(f.duree*60),'%h:%i') as dtime , note 
+            $requet = $pdo->prepare("SELECT titre , YEAR(DATESortie) as year ,  concat(p.nom,' ',p.prenom) AS realisateur , TIME_FORMAT(SEC_TO_TIME(f.duree*60),'%h:%i') as dtime , note 
                                      FROM  film f
                                      INNER JOIN realisateur r ON f.id_realisateur = r.id_realisateur 
                                      INNER JOIN personne p ON p.id_personne = r.id_personne
@@ -95,7 +95,7 @@ class CinemaController
         //$requet = $pdo->query("select  titre  , year(date) from film");
         try {
             //get list des film requet utilisant PDO
-            $cinemaStatement = $pdo->query("SELECT id_film, titre , YEAR(DATE) as year ,  concat(p.nom,' ',p.prenom) AS realisateur , TIME_FORMAT(SEC_TO_TIME(f.duree*60),'%h:%i') as dtime FROM  film f
+            $cinemaStatement = $pdo->query("SELECT id_film, titre , YEAR(DATESortie) as year ,  concat(p.nom,' ',p.prenom) AS realisateur , TIME_FORMAT(SEC_TO_TIME(f.duree*60),'%h:%i') as dtime FROM  film f
                                                                                         INNER JOIN realisateur r ON f.id_realisateur = r.id_realisateur 
                                                                                         INNER JOIN personne p ON p.id_personne = r.id_personne
                                                                                         ORDER BY YEAR desc");
@@ -148,6 +148,23 @@ class CinemaController
         require "view/acteur/detailActeur.php";
     }
 
+    public function getRealisateursList():array
+    {
+        $pdo = Connect::seConnecter();
+        //$requet = $pdo->query("select  titre  , year(date) from film");
+        try {
+            //get list des film requet utilisant PDO
+            $requet = $pdo->query("SELECT r.id_realisateur , concat(p.nom,' ',p.prenom) AS realisateur
+                                   FROM  realisateur r
+                                   INNER JOIN personne p ON p.id_personne = r.id_personne
+                                   ORDER BY p.nom");
+            // $cinemaStatement->execute();
+            $realisateursList = $requet->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $realisateursList;
+    }
 
 
     public function listRealisateur()
@@ -235,6 +252,14 @@ class CinemaController
     {
         require 'view/form/formAjouteRealisateur.php';
     }
+    public function formAjouteFilm(){
+        //fill realisateursList    
+        $realisateursList = $this->getRealisateursList();
+        //ou get list realisateur ici 
+        require 'view/form/formAjouteFilm.php';
+    }
+
+
     public function addPersonne(){
             
             $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -245,7 +270,8 @@ class CinemaController
         try{
             $pdo = Connect::seConnecter();
             $pdo->beginTransaction();
-            $requete = $pdo->prepare("INSERT INTO personne(nom , prenom,sexe,date_de_naissance) VALUES(:nom,:prenom,:sexe,:dn)");
+            $requete = $pdo->prepare("INSERT INTO personne(nom , prenom,sexe,date_de_naissance) 
+                                      VALUES(:nom,:prenom,:sexe,:dn)");
             $requete->execute([
                 "nom" => $nom,
                 "prenom" => $prenom,
@@ -291,6 +317,45 @@ class CinemaController
         require 'view/form/formAjouteRealisateur.php';
     }
 
+
+    public function addFilm(){
+
+        //get input filter 
+        $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_SPECIAL_CHARS);
+        $dateSortie = filter_input(INPUT_POST, 'date_sortie', FILTER_SANITIZE_SPECIAL_CHARS);
+        $duree = filter_input(INPUT_POST, 'duree', FILTER_SANITIZE_SPECIAL_CHARS);
+        $synopsis = filter_input(INPUT_POST, 'synopsis', FILTER_SANITIZE_SPECIAL_CHARS);
+        $affiche = filter_input(INPUT_POST, 'affiche', FILTER_SANITIZE_SPECIAL_CHARS);
+        $note = filter_input(INPUT_POST, 'note', FILTER_SANITIZE_SPECIAL_CHARS);
+        $idRealisateur = filter_input(INPUT_POST, 'realisateur', FILTER_SANITIZE_SPECIAL_CHARS);
+        // echo $titre 
+        //      ." " .$dateSortie
+        //      ." " .$duree
+        //      ." " .$synopsis
+        //      ." " .$affiche
+        //      ." " .$note
+        //      ." " .$idRealisateur;
+        // $sexe = filter_input(INPUT_POST, 'realisateur', FILTER_SANITIZE_SPECIAL_CHARS);
+    
+        try{
+            $pdo = Connect::seConnecter();
+            $requete = $pdo->prepare("INSERT INTO film(titre,dateSortie,duree,synopsis,affiche,note,id_realisateur) 
+                                      VALUES(:titre,:dateSortie,:duree,:synopsis,:affiche,:note,:realisateur)");
+            $requete->execute(["titre"       => $titre,
+                               "dateSortie"  => $dateSortie,
+                               "duree"       => $duree,
+                               "synopsis"    => $synopsis,
+                               "affiche"     => $affiche,
+                               "note"        => $note,
+                               "realisateur" => $idRealisateur]);
+
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        //return la form
+        $realisateursList = $this->getRealisateursList(); 
+        require 'view/form/formAjouteFilm.php';
+    }
 
 
 

@@ -70,6 +70,14 @@ if (isset($_GET["action"])) {
             $id = $ctrlCinema->addPersonne();
             $ctrlCinema->addRealisateur($id);
             break;
+        case 'formAjouteFilm':
+            $ctrlCinema->formAjouteFilm();
+            break;
+        case 'ajouteFilm':
+            $ctrlCinema->addFilm();
+            break;
+            
+    
     }
 }
 //index page par default get list of films 

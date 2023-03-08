@@ -10,7 +10,7 @@
         <input type="text" class="form-control" id="prenomInput" placeholder="Entrer Prenom" name='prenom' required>
     </div>
     <div class="form-group">
-        <label for="dateInput">date de naissance</label>
+        <label for="dateInput">Date De Naissance</label>
         <input type="date" class="form-control" id="dateInput" name="date_naissance" required>
     </div>
     <div class="form-group">
