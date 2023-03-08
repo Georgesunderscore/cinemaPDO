@@ -254,7 +254,7 @@ class CinemaController
     }
     public function formAjouteFilm(){
         //fill realisateursList    
-        $realisateursList = $this->getRealisateursList();
+        $realisateursList = $this-²>getRealisateursList();
         //ou get list realisateur ici 
         require 'view/form/formAjouteFilm.php';
     }
@@ -353,8 +353,9 @@ class CinemaController
             die('Erreur : ' . $e->getMessage());
         }
         //return la form
-        $realisateursList = $this->getRealisateursList(); 
-        require 'view/form/formAjouteFilm.php';
+        $this->formAjouteFilm();
+        // $realisateursList = $this->getRealisateursList(); 
+        // require 'view/form/formAjouteFilm.php';
     }
 
 
