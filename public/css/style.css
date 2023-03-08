@@ -43,9 +43,9 @@
     gap: 20px;
 
 }
-.card{
+.card{ display: flex;
     background: #fff;
-    width: 300px;
+    width: 350px;
     border-radius: 0px;
     /* tous elements en qui deppasse sera invisible */
     overflow: hidden;
@@ -55,7 +55,8 @@
 
 
 .card-header{
-    height: 260px;
+    display: flex;
+    flex-direction: column;
     /* pour que les childs sont bien positioner par rapport a cardheader comme parent dois etre relative */
     position: relative;
     overflow: hidden;
@@ -75,6 +76,8 @@
     /* font-weight: 300; */
 }
 .card-text  {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     padding: 30px;

@@ -43,6 +43,15 @@ if (isset($_GET["action"])) {
             $ctrlCinema->detailRealisateur($id);
             unset($_GET['action']);
             break;
+        case "listGenres":
+            $ctrlCinema->listGenres();
+            unset($_GET['action']);
+            break;
+
+        case "listRoles":
+            $ctrlCinema->listRoles();
+            unset($_GET['action']);
+            break;
     }
 }
 //index page par default get list of films 

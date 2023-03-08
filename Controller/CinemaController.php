@@ -52,6 +52,42 @@ class CinemaController
         return $castingsList;
     }
 
+    public function acteurFilmsList($id): array
+        {
+            $pdo = Connect::seConnecter();
+
+            try {
+                //get list des film requet utilisant PDO
+                $requet = $pdo->prepare("SELECT  distinct f.titre FROM  film f
+                                         INNER JOIN casting c ON f.id_film = c.id_film
+                                         INNER JOIN acteur a ON a.id_acteur= c.id_acteur
+                                         WHERE a.id_acteur = :id");
+                $requet->execute(["id" => $id]);
+                $acteurFilmsList = $requet->fetchAll();
+            } catch (\PDOException $e) {
+                die('Erreur : ' . $e->getMessage());
+            }
+            return $acteurFilmsList;
+    }
+
+    
+    public function realisateurFilmsList($id): array
+        {
+            $pdo = Connect::seConnecter();
+
+            try {
+                //get list des film requet utilisant PDO
+                $requet = $pdo->prepare("SELECT  distinct f.titre FROM  film f
+                                         INNER JOIN realisateur r ON f.id_realisateur
+                                         WHERE r.id_realisateur = :id");
+                $requet->execute(["id" => $id]);
+                $realisateurFilmsList = $requet->fetchAll();
+            } catch (\PDOException $e) {
+                die('Erreur : ' . $e->getMessage());
+            }
+            return $realisateurFilmsList;
+    }
+
 
     public function listFilms()
     {
@@ -106,11 +142,8 @@ class CinemaController
             die('Erreur : ' . $e->getMessage());
         }
 
-
-        // pour casting requet 
-        $castingsList = $this->castingList($id);
-        // var_dump($castingList);
-
+        // Film par acteur  
+        $acteurFilmsList = $this->acteurFilmsList($id);
 
         require "view/acteur/detailActeur.php";
     }
@@ -152,11 +185,45 @@ class CinemaController
         }
 
 
-        // pour casting requet 
-        // $filmsRealisateurList = $this->filmsRealisateurList($id);
+        // list des films par acteur 
+         $realisateurFilmsList = $this->realisateurFilmsList($id);
         // var_dump($castingList);
 
 
         require "view/realisateur/detailRealisateur.php";
     }
+
+
+    public function listGenres()
+    {
+        $pdo = Connect::seConnecter();
+        //$requet = $pdo->query("select  titre  , year(date) from film");
+        try {
+            //get list des film requet utilisant PDO
+            $cinemaStatement = $pdo->query("SELECT g.type FROM  genre g
+                                            ORDER BY g.type ");
+            // $cinemaStatement->execute();
+            $genresList = $cinemaStatement->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        require "view/genre/listGenres.php";
+    }
+
+    public function listRoles()
+    {
+        $pdo = Connect::seConnecter();
+        //$requet = $pdo->query("select  titre  , year(date) from film");
+        try {
+            //get list des film requet utilisant PDO
+            $cinemaStatement = $pdo->query("SELECT r.nom FROM  role r
+                                            ORDER BY r.nom ");
+            // $cinemaStatement->execute();
+            $rolesList = $cinemaStatement->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        require "view/role/listRoles.php";
+    }
+
 }

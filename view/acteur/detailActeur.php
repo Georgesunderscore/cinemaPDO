@@ -20,11 +20,11 @@ if (!isset($acteur) || empty($acteur)) {
                     <p>Date de naissance : <?= Date_format(new DateTime($acteur['date_de_naissance']), "d/m/Y");  ?></p>
                 </div>
                 <div class="card-text scroll">
-                    <h1>Casting</h1>
+                    <h1>Filmographie</h1>
                     <?php
-                    foreach ($castingsList as $cast) {
+                    foreach ($acteurFilmsList as $film) {
                     ?>
-                        <p><?= $cast['titre'] ?></p>
+                        <p><?= $film['titre'] ?></p>
                     <?php
                     }
                     ?>

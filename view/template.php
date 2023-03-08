@@ -31,9 +31,8 @@
             <a class="" href="index.php?action=listFilms">List des Films</a>
             <a href="index.php?action=listActeurs">List des Acteurs</a>
             <a href="index.php?action=listRealisateurs">List des Realisateurs</a>
-
-            <a href="#contact">Contact</a>
-            <a href="#about">About</a>
+            <a href="index.php?action=listGenres">List des Genres</a>
+            <a href="index.php?action=listRoles">List des Roles</a>
         </div>
 
     </header>
