@@ -52,6 +52,24 @@ if (isset($_GET["action"])) {
             $ctrlCinema->listRoles();
             unset($_GET['action']);
             break;
+
+        case 'formAjouteActeur':
+            $ctrlCinema->formAjouteActeur();
+            break;
+        case 'ajouteActeur':
+            //inside function call add acteur
+            $id = $ctrlCinema->addPersonne();
+            echo $id;
+            $ctrlCinema->addActeur($id);
+            break;
+
+        case 'formAjouteRealisateur':
+            $ctrlCinema->formAjouteRealisateur();
+            break;
+        case 'ajouteRealisateur':
+            $id = $ctrlCinema->addPersonne();
+            $ctrlCinema->addRealisateur($id);
+            break;
     }
 }
 //index page par default get list of films 

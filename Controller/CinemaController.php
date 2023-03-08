@@ -226,4 +226,72 @@ class CinemaController
         require "view/role/listRoles.php";
     }
 
+
+    public function formAjouteActeur()
+    {   
+        require 'view/form/formAjouteActeur.php';
+    }
+    public function formAjouteRealisateur()
+    {
+        require 'view/form/formAjouteRealisateur.php';
+    }
+    public function addPersonne(){
+            
+            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_SPECIAL_CHARS);
+            $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_SPECIAL_CHARS);
+            $dn = filter_input(INPUT_POST, 'date_naissance', FILTER_SANITIZE_SPECIAL_CHARS);
+            $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        try{
+            $pdo = Connect::seConnecter();
+            $pdo->beginTransaction();
+            $requete = $pdo->prepare("INSERT INTO personne(nom , prenom,sexe,date_de_naissance) VALUES(:nom,:prenom,:sexe,:dn)");
+            $requete->execute([
+                "nom" => $nom,
+                "prenom" => $prenom,
+                "sexe" => $sexe,
+                "dn" => $dn]);
+            
+            $id = $pdo->lastInsertId();
+            $pdo->commit();
+            // printf("New record has ID %d.\n", $id);
+
+        } catch (\PDOException $e) {
+            $pdo->rollback();
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $id;
+    }
+
+    public function addActeur($id)
+    {
+        try{
+            $pdo = Connect::seConnecter();
+            $requete = $pdo->prepare("INSERT INTO acteur(id_personne) VALUES(:id)");
+            $requete->execute(["id" => $id]);
+
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        //return la form 
+        require 'view/form/formAjouteActeur.php';
+    }
+
+    public function addRealisateur($id)
+    {
+        try{
+            $pdo = Connect::seConnecter();
+            $requete = $pdo->prepare("INSERT INTO realisateur(id_personne) VALUES(:id)");
+            $requete->execute(["id" => $id]);
+
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        //return la form 
+        require 'view/form/formAjouteRealisateur.php';
+    }
+
+
+
+
 }

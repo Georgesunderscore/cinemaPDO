@@ -26,9 +26,7 @@
 
 
         <div class="topnav">
-
-
-            <a class="" href="index.php?action=listFilms">List des Films</a>
+            <a href="index.php?action=listFilms" >List des Films</a>
             <a href="index.php?action=listActeurs">List des Acteurs</a>
             <a href="index.php?action=listRealisateurs">List des Realisateurs</a>
             <a href="index.php?action=listGenres">List des Genres</a>
@@ -36,6 +34,10 @@
         </div>
 
     </header>
+
+    <li><a href="index.php?action=formAjouteActeur">+ Acteur</a></li>
+    <li><a href="index.php?action=formAjouteRealisateur">+ Realisateur</a></li>
+
 
 
     <!-- pour faire visioner le continu de la page listfilm passer en parameter avec required en template  -->
