@@ -6,10 +6,25 @@
     font-family: "Poppins";
 }
 
+.topnavadmin{
+    background-color: #180f6b;
+    overflow: hidden;
+  }
+
+.topnavadmin a {
+    float: center;
+    color: #f5e8e8;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
 .topnav {
     background-color: #333;
     overflow: hidden;
   }
+  
   
   /* Style the links inside the navigation bar */
   .topnav a {

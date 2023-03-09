@@ -35,9 +35,16 @@
 
     </header>
 
-    <li><a href="index.php?action=formAjouteActeur">+ Acteur</a></li>
-    <li><a href="index.php?action=formAjouteRealisateur">+ Realisateur</a></li>
-    <li><a href="index.php?action=formAjouteFilm">+ Film</a></li>
+    
+
+    <div class="topnavadmin">
+        <a href="index.php?action=formAjouteActeur">+ Acteur</a>
+        <a href="index.php?action=formAjouteRealisateur">+ Realisateur</a>
+        <a href="index.php?action=formAjouteFilm">+ Film</a>
+        <a href="index.php?action=formAjouteCasting">+ Casting</a>
+        <a href="index.php?action=formAjouteGenre">+ Genre</a>
+        <a href="index.php?action=formAjouteRole">+ Role</a>
+    </div>
 
 
 

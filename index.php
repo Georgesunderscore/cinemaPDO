@@ -76,6 +76,14 @@ if (isset($_GET["action"])) {
         case 'ajouteFilm':
             $ctrlCinema->addFilm();
             break;
+
+        case 'formAjouteCasting':
+            $ctrlCinema->formAjouteCasting();
+            break;
+        case 'ajouteCasting':
+            $ctrlCinema->addCasting();
+            break;
+            
             
     
     }

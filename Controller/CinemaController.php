@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+
 use Model\Connect;
 // spl_autoload_register(function ($class_name) {
 //     require_once $class_name . '.php';
@@ -165,6 +166,77 @@ class CinemaController
         }
         return $realisateursList;
     }
+    public function getActeursList():array
+    {
+        $pdo = Connect::seConnecter();
+        //$requet = $pdo->query("select  titre  , year(date) from film");
+        try {
+            //get list des film requet utilisant PDO
+            $requet = $pdo->query("SELECT a.id_acteur , concat(p.nom,' ',p.prenom) AS acteur
+                                   FROM  acteur a
+                                   INNER JOIN personne p ON p.id_personne = a.id_personne
+                                   ORDER BY p.nom");
+            // $cinemaStatement->execute();
+            $acteursList = $requet->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $acteursList;
+    }
+    public function getFilmsList():array
+    {
+        $pdo = Connect::seConnecter();
+        //$requet = $pdo->query("select  titre  , year(date) from film");
+        try {
+            //get list des film requet utilisant PDO
+            $requet = $pdo->query("SELECT f.id_film , f.titre AS titre ,year(f.datesortie) AS year
+                                   FROM  film f
+                                   ORDER BY f.titre ,year");
+            // $cinemaStatement->execute();
+            $filmsList = $requet->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $filmsList;
+    }
+    public function getRolesList():array
+    {
+        $pdo = Connect::seConnecter();
+        //$requet = $pdo->query("select  titre  , year(date) from film");
+        try {
+            //get list des film requet utilisant PDO
+            $requet = $pdo->query("SELECT r.id_role , r.nom  
+                                   FROM  role r
+                                   ORDER BY r.nom");
+            // $cinemaStatement->execute();
+            $rolesList = $requet->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $rolesList;
+    }
+
+
+    
+
+
+    public function getGenresList():array
+    {
+        $pdo = Connect::seConnecter();
+        try {
+            //get list des genres
+            $requet = $pdo->query("SELECT g.id_genre , g.type AS type
+                                   FROM  genre g
+                                   ORDER BY g.type");
+            // $cinemaStatement->execute();
+            $genresList = $requet->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $genresList;
+    }
+
+    
 
 
     public function listRealisateur()
@@ -254,9 +326,22 @@ class CinemaController
     }
     public function formAjouteFilm(){
         //fill realisateursList    
-        $realisateursList = $this-²>getRealisateursList();
+        $realisateursList = $this->getRealisateursList();
+        //fill genresList    
+        $genresList = $this->getGenresList();
+        
         //ou get list realisateur ici 
         require 'view/form/formAjouteFilm.php';
+    }
+
+    public function formAjouteCasting(){
+        //fill lists    
+        $acteursList = $this->getActeursList();
+        $filmsList = $this->getFilmsList();
+        $rolesList = $this->getRolesList();
+        
+        //ou get list realisateur ici 
+        require 'view/form/formAjouteCasting.php';
     }
 
 
@@ -328,8 +413,19 @@ class CinemaController
         $affiche = filter_input(INPUT_POST, 'affiche', FILTER_SANITIZE_SPECIAL_CHARS);
         $note = filter_input(INPUT_POST, 'note', FILTER_SANITIZE_SPECIAL_CHARS);
         $idRealisateur = filter_input(INPUT_POST, 'realisateur', FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        $genresList=[];
+
+        foreach($_POST as $key => $value){
+            if (substr($key, 0,5) == 'Genre'){
+                $genresList [] = $value;
+            }
+        }
+
+        // var_dump($genresList);
+
         // echo $titre 
-        //      ." " .$dateSortie
+        //      ." " .$ dateSortie
         //      ." " .$duree
         //      ." " .$synopsis
         //      ." " .$affiche
@@ -349,13 +445,54 @@ class CinemaController
                                "note"        => $note,
                                "realisateur" => $idRealisateur]);
 
+            $film =     $pdo->lastInsertId();               
+                               
+            //insert genre det 
+            foreach($genresList as $genre){
+                $requete = $pdo->prepare("INSERT INTO genre_det(id_genre,id_film) 
+                                      VALUES(:genre,:film)");
+                $requete->execute(["genre"       => $genre,
+                                "film"  => $film,
+                                ]);
+            }
+                
         } catch (\PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
+
+        
+
+
+
         //return la form
         $this->formAjouteFilm();
         // $realisateursList = $this->getRealisateursList(); 
         // require 'view/form/formAjouteFilm.php';
+    }
+
+
+
+    public function addCasting()
+    {
+        $film = filter_input(INPUT_POST, 'film', FILTER_SANITIZE_SPECIAL_CHARS);
+        $acteur = filter_input(INPUT_POST, 'acteur', FILTER_SANITIZE_SPECIAL_CHARS);
+        $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        //
+        try{
+            $pdo = Connect::seConnecter();
+            $requete = $pdo->prepare("INSERT INTO casting(id_film,id_acteur,id_role) VALUES(:film,:acteur,:role)");
+            $requete->execute(["film" => $film,
+                               "acteur" => $acteur,
+                               "role" => $role]);
+
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+
+
+        //return la form 
+        require 'view/form/formAjouteCasting.php';
     }
 
 

@@ -38,6 +38,25 @@
             <?php } ?>
         </select>
     </div>
+    
+
+    <ul class="list-group">
+    <label for="selGenre">Genres List:</label>
+        
+    <?php
+        foreach ($genresList as $genre) { ?>
+            <li class="list-group-item m-0 ">
+                <input type="checkbox" id='<?= $genre["id_genre"] ?>' name='Genre<?= $genre["id_genre"] ?>' value='<?= $genre["id_genre"] ?>'  class=" ml-4" >
+                <label><?= $genre["type"] ?></label>
+            </li>
+            
+        <?php  } ?>
+
+        
+        
+    </ul>
+
+
 
     <button type="submit" class="btn btn-primary">Ajouter</button>
 </form>
