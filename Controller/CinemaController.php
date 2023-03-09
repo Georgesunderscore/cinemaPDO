@@ -470,7 +470,23 @@ class CinemaController
         // require 'view/form/formAjouteFilm.php';
     }
 
+    public function getCastingByKey($film, $acteur, $role){
+        $casting = null;
+        try{
+            $pdo = Connect::seConnecter();
+            $requete = $pdo->prepare("select * from  casting where id_role =:role and id_film =:film and id_acteur =:acteur");
+            $requete->execute(["film" => $film,
+                               "acteur" => $acteur, 
+                               "role" => $role]);
+           $casting = $requete->fetchAll();                              
+            
 
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $casting;
+
+    }
 
     public function addCasting()
     {
@@ -478,22 +494,70 @@ class CinemaController
         $acteur = filter_input(INPUT_POST, 'acteur', FILTER_SANITIZE_SPECIAL_CHARS);
         $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
         
-        //
-        try{
-            $pdo = Connect::seConnecter();
-            $requete = $pdo->prepare("INSERT INTO casting(id_film,id_acteur,id_role) VALUES(:film,:acteur,:role)");
-            $requete->execute(["film" => $film,
-                               "acteur" => $acteur,
-                               "role" => $role]);
+        //control if already exist 
+        $casting = $this->getCastingByKey($film, $acteur, $role);
+        if ($film != "" && $acteur != "" && $role != ""){
 
-        } catch (\PDOException $e) {
-            die('Erreur : ' . $e->getMessage());
-        }
+            if ($casting == null ){
+                
+                try{
+                    $pdo = Connect::seConnecter();
+                    $requete = $pdo->prepare("INSERT INTO casting(id_film,id_acteur,id_role) VALUES(:film,:acteur,:role)");
+                    $requete->execute(["film" => $film,
+                                    "acteur" => $acteur,
+                                    "role" => $role]);
+
+                    $_SESSION['returnmsg'] = " le Casting est Bien ajouter  !";
+                    $_SESSION['class'] = "has-success";
+                                    
+        
 
 
+                } catch (\PDOException $e) {
+                    die('Erreur : ' . $e->getMessage());
+                }
+
+            }
+            else {
+
+                    $_SESSION['returnmsg'] = " le Casting est Deja existant !";
+                    $_SESSION['class'] = "has-faild";
+            }
+
+            
+        
+        }   
+        else {
+                $_SESSION['returnmsg'] = "une ou plusieurs valeurs sont vides !";
+                $_SESSION['class'] = "has-faild";
+            
+            }
+        
+            if (isset($_SESSION['returnmsg'])) {
+                ?>
+                
+                <script>
+                    var cls = '<?= $_SESSION['class']?>';
+                    var msg = '<?= $_SESSION['returnmsg']?>';
+                    
+                
+                setMessage(cls, msg) </script>
+            
+            <?php
+
+            $this->formAjouteCasting();
         //return la form 
-        require 'view/form/formAjouteCasting.php';
+        //require 'view/form/formAjouteCasting.php';
+
+        
+
+        }
+            
+        unset($_SESSION['returnmsg']);
+        unset($_SESSION['class']);
     }
+
+    
 
 
 

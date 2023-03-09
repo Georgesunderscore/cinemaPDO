@@ -9,6 +9,18 @@ spl_autoload_register(function ($class_name) {
 });
 //$_GET['action'] = 'listFilms';
 
+session_start();
+
+unset($_SESSION['returnmsg']);
+unset($_SESSION['backgroundcol']);
+unset($_SESSION['class']);
+
+$_SESSION['returnmsg'] = "Default";
+$_SESSION['class'] = "trans ";
+
+
+
+
 $ctrlCinema = new CinemaController();
 
 
@@ -89,4 +101,9 @@ if (isset($_GET["action"])) {
     }
 }
 //index page par default get list of films 
-else $ctrlCinema->listFilms();
+else {$ctrlCinema->listFilms();
+
+
+    
+
+}

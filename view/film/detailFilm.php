@@ -59,6 +59,10 @@ if (!isset($film) || empty($film)) {
 
 $titre = "film Detail";
 $titre_secondaire = "Film Details";
+
+
+$class = $_SESSION['class'];
+$message = $_SESSION['returnmsg'];
 //end par , ob_get_clean  pour mettre le contenue de la page dans contenu et le paser en parameter pour template 
 $contenu = ob_get_clean();
 //require qui va passer le contenue  comme parametre a template        

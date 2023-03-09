@@ -27,6 +27,10 @@
 
 $titre = "ajouter acteur";
 $titre_secondaire = "ajouter realisateur formAjouteRealisateur page";
+
+
+$class = $_SESSION['class'];
+$message = $_SESSION['returnmsg'];
 $contenu = ob_get_clean();
 require "view/template.php";
 ?>

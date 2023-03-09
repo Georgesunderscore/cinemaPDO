@@ -52,7 +52,12 @@
     <div id="maincontainer">
         <h2><?= $titre_secondaire ?></h2>
         <?= $contenu ?>
-    </div>
+        
+        <span class='trans   <?= $class ?>'  ><?= $message ?> </span></div>
+
+        <script type="text/javascript" src="./public/js/main.js"></script>
+    
+
 </body>
 
 </html>

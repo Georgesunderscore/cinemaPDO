@@ -64,6 +64,10 @@
 
 $titre = "ajouter film";
 $titre_secondaire = "ajouter film formAjoutefilm page";
+
+
+$class = $_SESSION['class'];
+$message = $_SESSION['returnmsg'];
 $contenu = ob_get_clean();
 require "view/template.php";
 ?>

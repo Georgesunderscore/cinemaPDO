@@ -37,6 +37,10 @@ if (!isset($realisateur) || empty($realisateur)) {
 
 $titre = "Realisateur Details";
 $titre_secondaire = "Realisateur Details";
+
+
+$class = $_SESSION['class'];
+$message = $_SESSION['returnmsg'];
 //end par , ob_get_clean  pour mettre le contenue de la page dans contenu et le paser en parameter pour template 
 $contenu = ob_get_clean();
 //require qui va passer le contenue  comme parametre a template        
