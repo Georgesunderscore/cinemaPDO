@@ -417,15 +417,15 @@ class CinemaController
         $note = filter_input(INPUT_POST, 'note', FILTER_SANITIZE_SPECIAL_CHARS);
         $idRealisateur = filter_input(INPUT_POST, 'realisateur', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $genresList = [];
+        //$genresList = [];
 
-        // $genres = filter_input(INPUT_POST, "genres", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+        $genresList = filter_input(INPUT_POST, "genres", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-        foreach ($_POST as $key => $value) {
-            if (substr($key, 0, 5) == 'Genre') {
-                $genresList[] = $value;
-            }
-        }
+        // foreach ($_POST as $key => $value) {
+        //     if (substr($key, 0, 5) == 'Genre') {
+        //         $genresList[] = $value;
+        //     }
+        // }
 
         // var_dump($genresList);
 
