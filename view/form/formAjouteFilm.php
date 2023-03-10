@@ -46,7 +46,7 @@
         <?php
         foreach ($genresList as $genre) { ?>
             <li class="list-group-item m-0 ">
-                <input type="checkbox" name="genres[]" class=" ml-4">
+                <input type="checkbox" name="genres[]" value='<?= $genre["id_genre"] ?>' class=" ml-4">
                 <label><?= $genre["type"] ?></label>
             </li>
             <!-- name="genres[]" -->

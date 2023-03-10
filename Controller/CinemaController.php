@@ -420,6 +420,7 @@ class CinemaController
         //$genresList = [];
 
         $genresList = filter_input(INPUT_POST, "genres", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+        // var_dump($genresList);
 
         // foreach ($_POST as $key => $value) {
         //     if (substr($key, 0, 5) == 'Genre') {
