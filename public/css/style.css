@@ -54,6 +54,8 @@
     
     .trans {
         visibility: hidden;
+        padding: 10px;
+        border-radius: 10px;
         opacity: 0;
     }
     
@@ -63,7 +65,9 @@
         color: white;
         visibility: visible;
         opacity: 1;
-        transition: 2s, opacity 0.5s ease-in-out;
+        
+        
+
     
     
         }
@@ -72,26 +76,49 @@
         color: white;
         visibility: visible;
         opacity: 1;
-        transition: 2s, opacity 0.5s ease-in-out;
+        
+        
+
 
         
       
         
     }
 
+   
     body .trans{
-        animation: fadeInAnimation ease 3s;
+        animation: fadeInAnimation ease-in-out 3s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
+
     }
     @keyframes fadeInAnimation {
         0% {
             opacity: 0;
         }
-        100% {
+       
+        50%{
             opacity: 1;
         }
+        100% {
+            opacity: 0;
+
+        }
+        
     }
+/*     
+    .btn:hover {
+        
+            transform: scale(1.5);
+        
+    }
+    
+    .btn {
+        transition: transform 1000ms ease-out;
+    } */
+
+        
+
   
 
 .container{

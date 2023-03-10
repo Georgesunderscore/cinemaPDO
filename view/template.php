@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./public/css/style.css">
+    <link rel="stylesheet" href="./public/sass/style2.css">
+
 </head>
 
 
@@ -26,7 +28,7 @@
 
 
         <div class="topnav">
-            <a href="index.php?action=listFilms" >List des Films</a>
+            <a href="index.php?action=listFilms">List des Films</a>
             <a href="index.php?action=listActeurs">List des Acteurs</a>
             <a href="index.php?action=listRealisateurs">List des Realisateurs</a>
             <a href="index.php?action=listGenres">List des Genres</a>
@@ -35,7 +37,7 @@
 
     </header>
 
-    
+
 
     <div class="topnavadmin">
         <a href="index.php?action=formAjouteActeur">+ Acteur</a>
@@ -52,11 +54,12 @@
     <div id="maincontainer">
         <h2><?= $titre_secondaire ?></h2>
         <?= $contenu ?>
-        
-        <span class='trans   <?= $class ?>'  ><?= $message ?> </span></div>
 
-        <script type="text/javascript" src="./public/js/main.js"></script>
-    
+        <span class='trans   <?= $class ?>'><?= $message ?> </span>
+    </div>
+
+    <script type="text/javascript" src="./public/js/main.js"></script>
+
 
 </body>
 

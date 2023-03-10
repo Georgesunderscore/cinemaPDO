@@ -1,0 +1,18 @@
+.btn:hover + .boxes > .boxes--rotDegrees {
+  transform: rotate(0deg);
+}
+.btn:hover + .boxes > .boxes--rotTurns {
+  transform: rotate(0turn);
+}
+
+.boxes--rotDegrees {
+  transform: rotate(-360deg);
+  transition: transform 500ms ease-in-out;
+}
+.boxes--rotTurns {
+  background: pink;
+  transform: rotate(-1turn);
+  transition: transform 500ms ease-in-out;
+}
+
+/*# sourceMappingURL=style2.css.map */

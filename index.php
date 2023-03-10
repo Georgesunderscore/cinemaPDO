@@ -95,15 +95,9 @@ if (isset($_GET["action"])) {
         case 'ajouteCasting':
             $ctrlCinema->addCasting();
             break;
-            
-            
-    
     }
 }
 //index page par default get list of films 
-else {$ctrlCinema->listFilms();
-
-
-    
-
+else {
+    $ctrlCinema->listFilms();
 }

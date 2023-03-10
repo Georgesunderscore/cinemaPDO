@@ -54,39 +54,39 @@ class CinemaController
     }
 
     public function acteurFilmsList($id): array
-        {
-            $pdo = Connect::seConnecter();
+    {
+        $pdo = Connect::seConnecter();
 
-            try {
-                //get list des film requet utilisant PDO
-                $requet = $pdo->prepare("SELECT  distinct f.titre FROM  film f
+        try {
+            //get list des film requet utilisant PDO
+            $requet = $pdo->prepare("SELECT  distinct f.titre FROM  film f
                                          INNER JOIN casting c ON f.id_film = c.id_film
                                          INNER JOIN acteur a ON a.id_acteur= c.id_acteur
                                          WHERE a.id_acteur = :id");
-                $requet->execute(["id" => $id]);
-                $acteurFilmsList = $requet->fetchAll();
-            } catch (\PDOException $e) {
-                die('Erreur : ' . $e->getMessage());
-            }
-            return $acteurFilmsList;
+            $requet->execute(["id" => $id]);
+            $acteurFilmsList = $requet->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $acteurFilmsList;
     }
 
-    
-    public function realisateurFilmsList($id): array
-        {
-            $pdo = Connect::seConnecter();
 
-            try {
-                //get list des film requet utilisant PDO
-                $requet = $pdo->prepare("SELECT  distinct f.titre FROM  film f
+    public function realisateurFilmsList($id): array
+    {
+        $pdo = Connect::seConnecter();
+
+        try {
+            //get list des film requet utilisant PDO
+            $requet = $pdo->prepare("SELECT  distinct f.titre FROM  film f
                                          INNER JOIN realisateur r ON f.id_realisateur
                                          WHERE r.id_realisateur = :id");
-                $requet->execute(["id" => $id]);
-                $realisateurFilmsList = $requet->fetchAll();
-            } catch (\PDOException $e) {
-                die('Erreur : ' . $e->getMessage());
-            }
-            return $realisateurFilmsList;
+            $requet->execute(["id" => $id]);
+            $realisateurFilmsList = $requet->fetchAll();
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $realisateurFilmsList;
     }
 
 
@@ -149,7 +149,7 @@ class CinemaController
         require "view/acteur/detailActeur.php";
     }
 
-    public function getRealisateursList():array
+    public function getRealisateursList(): array
     {
         $pdo = Connect::seConnecter();
         //$requet = $pdo->query("select  titre  , year(date) from film");
@@ -166,7 +166,7 @@ class CinemaController
         }
         return $realisateursList;
     }
-    public function getActeursList():array
+    public function getActeursList(): array
     {
         $pdo = Connect::seConnecter();
         //$requet = $pdo->query("select  titre  , year(date) from film");
@@ -183,7 +183,7 @@ class CinemaController
         }
         return $acteursList;
     }
-    public function getFilmsList():array
+    public function getFilmsList(): array
     {
         $pdo = Connect::seConnecter();
         //$requet = $pdo->query("select  titre  , year(date) from film");
@@ -199,7 +199,7 @@ class CinemaController
         }
         return $filmsList;
     }
-    public function getRolesList():array
+    public function getRolesList(): array
     {
         $pdo = Connect::seConnecter();
         //$requet = $pdo->query("select  titre  , year(date) from film");
@@ -217,10 +217,10 @@ class CinemaController
     }
 
 
-    
 
 
-    public function getGenresList():array
+
+    public function getGenresList(): array
     {
         $pdo = Connect::seConnecter();
         try {
@@ -236,7 +236,7 @@ class CinemaController
         return $genresList;
     }
 
-    
+
 
 
     public function listRealisateur()
@@ -275,7 +275,7 @@ class CinemaController
 
 
         // list des films par acteur 
-         $realisateurFilmsList = $this->realisateurFilmsList($id);
+        $realisateurFilmsList = $this->realisateurFilmsList($id);
         // var_dump($castingList);
 
 
@@ -317,42 +317,45 @@ class CinemaController
 
 
     public function formAjouteActeur()
-    {   
+    {
         require 'view/form/formAjouteActeur.php';
     }
     public function formAjouteRealisateur()
     {
         require 'view/form/formAjouteRealisateur.php';
     }
-    public function formAjouteFilm(){
+    public function formAjouteFilm()
+    {
         //fill realisateursList    
         $realisateursList = $this->getRealisateursList();
         //fill genresList    
         $genresList = $this->getGenresList();
-        
+
         //ou get list realisateur ici 
         require 'view/form/formAjouteFilm.php';
     }
 
-    public function formAjouteCasting(){
+    public function formAjouteCasting()
+    {
         //fill lists    
         $acteursList = $this->getActeursList();
         $filmsList = $this->getFilmsList();
         $rolesList = $this->getRolesList();
-        
+
         //ou get list realisateur ici 
         require 'view/form/formAjouteCasting.php';
     }
 
 
-    public function addPersonne(){
-            
-            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_SPECIAL_CHARS);
-            $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_SPECIAL_CHARS);
-            $dn = filter_input(INPUT_POST, 'date_naissance', FILTER_SANITIZE_SPECIAL_CHARS);
-            $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_SPECIAL_CHARS);
-        
-        try{
+    public function addPersonne()
+    {
+
+        $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_SPECIAL_CHARS);
+        $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_SPECIAL_CHARS);
+        $dn = filter_input(INPUT_POST, 'date_naissance', FILTER_SANITIZE_SPECIAL_CHARS);
+        $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        try {
             $pdo = Connect::seConnecter();
             $pdo->beginTransaction();
             $requete = $pdo->prepare("INSERT INTO personne(nom , prenom,sexe,date_de_naissance) 
@@ -361,8 +364,9 @@ class CinemaController
                 "nom" => $nom,
                 "prenom" => $prenom,
                 "sexe" => $sexe,
-                "dn" => $dn]);
-            
+                "dn" => $dn
+            ]);
+
             $id = $pdo->lastInsertId();
             $pdo->commit();
             // printf("New record has ID %d.\n", $id);
@@ -376,11 +380,10 @@ class CinemaController
 
     public function addActeur($id)
     {
-        try{
+        try {
             $pdo = Connect::seConnecter();
             $requete = $pdo->prepare("INSERT INTO acteur(id_personne) VALUES(:id)");
             $requete->execute(["id" => $id]);
-
         } catch (\PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
@@ -390,11 +393,10 @@ class CinemaController
 
     public function addRealisateur($id)
     {
-        try{
+        try {
             $pdo = Connect::seConnecter();
             $requete = $pdo->prepare("INSERT INTO realisateur(id_personne) VALUES(:id)");
             $requete->execute(["id" => $id]);
-
         } catch (\PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
@@ -403,7 +405,8 @@ class CinemaController
     }
 
 
-    public function addFilm(){
+    public function addFilm()
+    {
 
         //get input filter 
         $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -413,12 +416,14 @@ class CinemaController
         $affiche = filter_input(INPUT_POST, 'affiche', FILTER_SANITIZE_SPECIAL_CHARS);
         $note = filter_input(INPUT_POST, 'note', FILTER_SANITIZE_SPECIAL_CHARS);
         $idRealisateur = filter_input(INPUT_POST, 'realisateur', FILTER_SANITIZE_SPECIAL_CHARS);
-        
-        $genresList=[];
 
-        foreach($_POST as $key => $value){
-            if (substr($key, 0,5) == 'Genre'){
-                $genresList [] = $value;
+        $genresList = [];
+
+        // $genres = filter_input(INPUT_POST, "genres", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+
+        foreach ($_POST as $key => $value) {
+            if (substr($key, 0, 5) == 'Genre') {
+                $genresList[] = $value;
             }
         }
 
@@ -432,35 +437,39 @@ class CinemaController
         //      ." " .$note
         //      ." " .$idRealisateur;
         // $sexe = filter_input(INPUT_POST, 'realisateur', FILTER_SANITIZE_SPECIAL_CHARS);
-    
-        try{
+
+        // if($titre && )
+
+        try {
             $pdo = Connect::seConnecter();
             $requete = $pdo->prepare("INSERT INTO film(titre,dateSortie,duree,synopsis,affiche,note,id_realisateur) 
                                       VALUES(:titre,:dateSortie,:duree,:synopsis,:affiche,:note,:realisateur)");
-            $requete->execute(["titre"       => $titre,
-                               "dateSortie"  => $dateSortie,
-                               "duree"       => $duree,
-                               "synopsis"    => $synopsis,
-                               "affiche"     => $affiche,
-                               "note"        => $note,
-                               "realisateur" => $idRealisateur]);
+            $requete->execute([
+                "titre"       => $titre,
+                "dateSortie"  => $dateSortie,
+                "duree"       => $duree,
+                "synopsis"    => $synopsis,
+                "affiche"     => $affiche,
+                "note"        => $note,
+                "realisateur" => $idRealisateur
+            ]);
 
-            $film =     $pdo->lastInsertId();               
-                               
+            $film =     $pdo->lastInsertId();
+
             //insert genre det 
-            foreach($genresList as $genre){
+            foreach ($genresList as $genre) {
                 $requete = $pdo->prepare("INSERT INTO genre_det(id_genre,id_film) 
                                       VALUES(:genre,:film)");
-                $requete->execute(["genre"       => $genre,
-                                "film"  => $film,
-                                ]);
+                $requete->execute([
+                    "genre"       => $genre,
+                    "film"  => $film,
+                ]);
             }
-                
         } catch (\PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
 
-        
+
 
 
 
@@ -470,22 +479,22 @@ class CinemaController
         // require 'view/form/formAjouteFilm.php';
     }
 
-    public function getCastingByKey($film, $acteur, $role){
+    public function getCastingByKey($film, $acteur, $role)
+    {
         $casting = null;
-        try{
+        try {
             $pdo = Connect::seConnecter();
             $requete = $pdo->prepare("select * from  casting where id_role =:role and id_film =:film and id_acteur =:acteur");
-            $requete->execute(["film" => $film,
-                               "acteur" => $acteur, 
-                               "role" => $role]);
-           $casting = $requete->fetchAll();                              
-            
-
+            $requete->execute([
+                "film" => $film,
+                "acteur" => $acteur,
+                "role" => $role
+            ]);
+            $casting = $requete->fetchAll();
         } catch (\PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
         return $casting;
-
     }
 
     public function addCasting()
@@ -493,72 +502,60 @@ class CinemaController
         $film = filter_input(INPUT_POST, 'film', FILTER_SANITIZE_SPECIAL_CHARS);
         $acteur = filter_input(INPUT_POST, 'acteur', FILTER_SANITIZE_SPECIAL_CHARS);
         $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_SPECIAL_CHARS);
-        
+
         //control if already exist 
         $casting = $this->getCastingByKey($film, $acteur, $role);
-        if ($film != "" && $acteur != "" && $role != ""){
+        if ($film != "" && $acteur != "" && $role != "") {
 
-            if ($casting == null ){
-                
-                try{
+            if ($casting == null) {
+
+                try {
                     $pdo = Connect::seConnecter();
                     $requete = $pdo->prepare("INSERT INTO casting(id_film,id_acteur,id_role) VALUES(:film,:acteur,:role)");
-                    $requete->execute(["film" => $film,
-                                    "acteur" => $acteur,
-                                    "role" => $role]);
+                    $requete->execute([
+                        "film" => $film,
+                        "acteur" => $acteur,
+                        "role" => $role
+                    ]);
 
                     $_SESSION['returnmsg'] = " le Casting est Bien ajouter  !";
                     $_SESSION['class'] = "has-success";
-                                    
-        
-
-
                 } catch (\PDOException $e) {
                     die('Erreur : ' . $e->getMessage());
                 }
+            } else {
 
-            }
-            else {
-
-                    $_SESSION['returnmsg'] = " le Casting est Deja existant !";
-                    $_SESSION['class'] = "has-faild";
-            }
-
-            
-        
-        }   
-        else {
-                $_SESSION['returnmsg'] = "une ou plusieurs valeurs sont vides !";
+                $_SESSION['returnmsg'] = " le Casting est Deja existant !";
                 $_SESSION['class'] = "has-faild";
-            
             }
-        
-            if (isset($_SESSION['returnmsg'])) {
-                ?>
-                
-                <script>
-                    var cls = '<?= $_SESSION['class']?>';
-                    var msg = '<?= $_SESSION['returnmsg']?>';
-                    
-                
-                setMessage(cls, msg) </script>
-            
-            <?php
+        } else {
+            $_SESSION['returnmsg'] = "une ou plusieurs valeurs sont vides !";
+            $_SESSION['class'] = "has-faild";
+        }
+
+        if (isset($_SESSION['returnmsg'])) {
+?>
+
+            <script>
+                var cls = '<?= $_SESSION['class'] ?>';
+                var msg = '<?= $_SESSION['returnmsg'] ?>';
+
+
+                setMessage(cls, msg)
+            </script>
+
+
+<?php
 
             $this->formAjouteCasting();
-        //return la form 
-        //require 'view/form/formAjouteCasting.php';
+            //return la form 
+            //require 'view/form/formAjouteCasting.php';
 
-        
+
 
         }
-            
+
         unset($_SESSION['returnmsg']);
         unset($_SESSION['class']);
     }
-
-    
-
-
-
 }

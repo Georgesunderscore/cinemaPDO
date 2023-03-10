@@ -5,7 +5,7 @@
         <label for="titreInput">Titre</label>
         <input type="text" class="form-control" id="titreInput" placeholder="Titre" name="titre" required>
     </div>
-    
+
     <div class="form-group">
         <label for="dateInput">Date Sortie</label>
         <input type="date" class="form-control" id="dateInput" name="date_sortie" required>
@@ -38,22 +38,23 @@
             <?php } ?>
         </select>
     </div>
-    
+
 
     <ul class="list-group">
-    <label for="selGenre">Genres List:</label>
-        
-    <?php
+        <label for="selGenre">Genres List:</label>
+
+        <?php
         foreach ($genresList as $genre) { ?>
             <li class="list-group-item m-0 ">
-                <input type="checkbox" id='<?= $genre["id_genre"] ?>' name='Genre<?= $genre["id_genre"] ?>' value='<?= $genre["id_genre"] ?>'  class=" ml-4" >
+                <input type="checkbox" id='<?= $genre["id_genre"] ?>' name='Genre<?= $genre["id_genre"] ?>' value='<?= $genre["id_genre"] ?>' class=" ml-4">
                 <label><?= $genre["type"] ?></label>
             </li>
-            
+            <!-- name="genres[]" -->
+
         <?php  } ?>
 
-        
-        
+
+
     </ul>
 
 
